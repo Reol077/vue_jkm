@@ -1,28 +1,95 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="box">
+      <template>
+        <el-menu
+          :default-active="activeIndex2"
+          class="el-menu-demo nav-box"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          v-if="islogin === false"
+        >
+          <el-menu-item index="2" style="float:right;" @click="register">注册</el-menu-item>
+          <el-menu-item index="1" style="float:right" @click="login" >登录</el-menu-item>
+        </el-menu>
+      </template>
+      <template>
+        <el-menu
+          :default-active="activeIndex2"
+          class="el-menu-demo nav-box"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          v-if="islogin === true"
+        >
+          <el-menu-item index="2" @click="upload" >上传</el-menu-item>
+          <el-menu-item index="1" @click="personal" >个人中心</el-menu-item>
+        </el-menu>
+      </template>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  data() {
+    return {
+      top: 1,
+      activeIndex: "1",
+      activeIndex2: "1",
+      islogin: false
+    };
+  },
+  mounted() {
+    if (this.islogin === false) {
+      this.login()
+    } else {
+      this.personal()
+    }
+  },
+  methods: {
+    islogintrue(){
+      this.islogin = !this.islogin
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    upload() {
+      this.$router.push({
+        name: "upload"
+      });
+    },
+    register() {
+      this.$router.push({
+        name: "register"
+      });
+    },
+    login() {
+      this.$router.push({
+        name: "login"
+      });
+    },
+    personal() {
+      this.$router.push({
+        name: "personal"
+      });
+    },
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+#box {
+  width: 100%;
+}
+.nav-box {
+  padding: 0 10%;
 }
 </style>
